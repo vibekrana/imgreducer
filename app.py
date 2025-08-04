@@ -14,8 +14,8 @@ def compress(img: Image.Image, img_quality: float):
     img_np = np.array(img) / 255.0  
     compressed = []
     for i in range(3):
-        imgsize = img_np[:, :, i]
-        pca = PCA(img_quality / 100.0)
+        imgsize = img_np[:, :, i] 
+        pca = PCA(img_quality / 100.0) # image quality dynammic
         transformed = pca.fit_transform(imgsize)
         inverse_img = pca.inverse_transform(transformed)
         compressed.append(inverse_img)
