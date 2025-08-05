@@ -11,7 +11,7 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 def compress(img: Image.Image, img_quality: float):
     img = img.convert('RGB')
-    img_np = np.array(img) / 255.0  
+    img_np = np.array(img) / 255.0  #converts 0-255 to 0-1 normalizing 
     compressed = []
     for i in range(3):
         imgsize = img_np[:, :, i] 
@@ -20,7 +20,7 @@ def compress(img: Image.Image, img_quality: float):
         inverse_img = pca.inverse_transform(transformed)
         compressed.append(inverse_img)
     compressed_img = np.stack(compressed, axis=2)
-    compressed_img = np.clip(compressed_img * 255, 0, 255).astype(np.uint8)
+    compressed_img = np.clip(compressed_img * 255, 0, 255).astype(np.uint8) #conevrting back to 0-255 pixel range 0 is min 255 is max we know
     return Image.fromarray(compressed_img)
 
 @app.route('/', methods=['GET', 'POST'])
